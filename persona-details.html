@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aging Services Persona Builder</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        :root {
+            --md-sys-color-primary: #6750A4;
+            --md-sys-color-on-primary: #FFFFFF;
+            --md-sys-color-primary-container: #EADDFF;
+            --md-sys-color-on-primary-container: #21005D;
+            --md-sys-color-secondary: #625B71;
+            --md-sys-color-on-secondary: #FFFFFF;
+            --md-sys-color-secondary-container: #E8DEF8;
+            --md-sys-color-on-secondary-container: #1D192B;
+            --md-sys-color-tertiary: #7D5260;
+            --md-sys-color-on-tertiary: #FFFFFF;
+            --md-sys-color-tertiary-container: #FFD8E4;
+            --md-sys-color-on-tertiary-container: #31111D;
+            --md-sys-color-error: #BA1A1A;
+            --md-sys-color-on-error: #FFFFFF;
+            --md-sys-color-error-container: #FFDAD6;
+            --md-sys-color-on-error-container: #410002;
+            --md-sys-color-outline: #79747E;
+            --md-sys-color-outline-variant: #CAC4D0;
+            --md-sys-color-surface: #FEF7FF;
+            --md-sys-color-on-surface: #1C1B1F;
+            --md-sys-color-surface-variant: #E7E0EC;
+            --md-sys-color-on-surface-variant: #49454F;
+            --md-sys-color-inverse-surface: #313033;
+            --md-sys-color-inverse-on-surface: #F4EFF4;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 400;
+            color: var(--md-sys-color-primary);
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--md-sys-color-on-surface-variant);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+        }
+
+        .card {
+            background: var(--md-sys-color-surface);
+            border: 1px solid var(--md-sys-color-outline-variant);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--md-sys-color-primary);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-field {
+            margin-bottom: 16px;
+        }
+
+        .form-field label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--md-sys-color-on-surface-variant);
+            margin-bottom: 8px;
+        }
+
+        .form-field input,
+        .form-field select,
+        .form-field textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--md-sys-color-outline);
+            border-radius: 4px;
+            font-size: 1rem;
+            background: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+            transition: border-color 0.2s ease;
+        }
+
+        .form-field input:focus,
+        .form-field select:focus,
+        .form-field textarea:focus {
+            outline: none;
+            border-color: var(--md-sys-color-primary);
+            border-width: 2px;
+        }
+
+        .form-field textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .checkbox-group,
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .checkbox-item,
+        .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 200px;
+        }
+
+        .checkbox-item input,
+        .radio-item input {
+            width: auto;
+            margin: 0;
+        }
+
+        .slider-container {
+            margin-top: 8px;
+        }
+
+        .slider {
+            width: 100%;
+            height: 4px;
+            border-radius: 2px;
+            background: var(--md-sys-color-outline-variant);
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--md-sys-color-primary);
+            cursor: pointer;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--md-sys-color-primary);
+            cursor: pointer;
+            border: none;
+        }
+
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: var(--md-sys-color-on-surface-variant);
+            margin-top: 4px;
+        }
+
+        .slider-value {
+            text-align: center;
+            font-weight: 500;
+            color: var(--md-sys-color-primary);
+            margin-top: 8px;
+        }
+
+        .actions {
+            text-align: center;
+            margin-top: 32px;
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 2px 8px rgba(103, 80, 164, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--md-sys-color-secondary-container);
+            color: var(--md-sys-color-on-secondary-container);
+        }
+
+        .btn-secondary:hover {
+            background: var(--md-sys-color-secondary);
+            color: var(--md-sys-color-on-secondary);
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 16px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Aging Services Persona Builder</h1>
+            <p>Create comprehensive, culturally-informed personas for aging services design</p>
+        </div>
+
+        <form id="personaForm" class="form-grid">
+            <!-- Basic Demographics -->
+            <div class="card">
+                <div class="card-title">
+                    <span class="material-icons">person</span>
+                    Basic Demographics
+                </div>
+                
+                <div class="form-field">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" value="Margaret Taylor">
+                </div>
+                
+                <div class="form-field">
+                    <label for="age">Age</label>
+                    <input type="number" id="age" name="age" min="50" max="120" value="78">
+                </div>
+                
+                <div class="form-field">
+                    <label for="ethnicity">Ethnicity</label>
+                    <select id="ethnicity" name="ethnicity">
+                        <option value="">Select ethnicity...</option>
+                        <option value="Black/African American" selected>Black/African American</option>
+                        <option value="White/Caucasian">White/Caucasian</option>
+                        <option value="Hispanic/Latino">Hispanic/Latino</option>
+                        <option value="Asian">Asian</option>
+                        <option value="Native American">Native American</option>
+                        <option value="Pacific Islander">Pacific Islander</option>
+                        <option value="Mixed/Other">Mixed/Other</option>
+                        <option value="Prefer not to say">Prefer not to say</option>
+                    </select>
+                </div>
+                
+                <div class="form-field">
+                    <label for="gender">Gender</label>
+                    <select id="gender" name="gender">
+                        <option value="">Select gender...</option>
+                        <option value="Female" selected>Female</option>
+                        <option value="Male">Male</option>
+                        <option value="Non-binary">Non-binary</option>
+                        <option value="Transgender">Transgender</option>
+                        <option value="Prefer not to say">Prefer not to say</option>
+                    </select>
+                </div>
+                
+                <div class="form-field">
+                    <label for="maritalStatus">Marital Status</label>
+                    <select id="maritalStatus" name="maritalStatus">
+                        <option value="">Select status...</option>
+                        <option value="Married">Married</option>
+                        <option value="Widowed" selected>Widowed</option>
+                        <option value="Divorced">Divorced</option>
+                        <option value="Single">Single</option>
+                        <option value="Partnered">Partnered</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Living Situation & Health -->
+            <div class="card">
+                <div class="card-title">
+                    <span class="material-icons">home</span>
+                    Living & Health
+                </div>
+                
+                <div class="form-field">
+                    <label for="livingSituation">Living Situation</label>
+                    <select id="livingSituation" name="livingSituation">
+                        <option value="">Select living situation...</option>
+                        <option value="Lives alone" selected>Lives alone</option>
+                        <option value="Lives with spouse/partner">Lives with spouse/partner</option>
+                        <option value="Lives with adult children">Lives with adult children</option>
+                        <option value="Assisted living">Assisted living</option>
+                        <option value="Senior housing">Senior housing</option>
+                        <option value="Subsidized housing" selected>Subsidized senior housing</option>
+                        <option value="Nursing home">Nursing home</option>
+                    </select>
+                </div>
+                
+                <div class="form-field">
+                    <label for="primaryDiagnosis">Primary Diagnosis</label>
+                    <input type="text" id="primaryDiagnosis" name="primaryDiagnosis" value="Mid-stage Alzheimer's Disease">
+                </div>
+                
+                <div class="form-field">
+                    <label>Mobility Challenges</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="arthritis" name="mobility" value="arthritis" checked>
+                            <label for="arthritis">Mild arthritis</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="cane" name="mobility" value="cane" checked>
+                            <label for="cane">Uses cane</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="walker" name="mobility" value="walker">
+                            <label for="walker">Uses walker</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="wheelchair" name="mobility" value="wheelchair">
+                            <label for="wheelchair">Uses wheelchair</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-field">
+                    <label>Cognitive Challenges</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="memory" name="cognitive" value="memory" checked>
+                            <label for="memory">Memory loss</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="disorientation" name="cognitive" value="disorientation" checked>
+                            <label for="disorientation">Disorientation</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="medication" name="cognitive" value="medication" checked>
+                            <label for="medication">Medication management difficulty</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="decision" name="cognitive" value="decision">
+                            <label for="decision">Decision-making challenges</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Socioeconomic & Education -->
+            <div class="card">
+                <div class="card-title">
+                    <span class="material-icons">school</span>
+                    Education & Economics
+                </div>
+                
+                <div class="form-field">
+                    <label for="education">Education Level</label>
+                    <select id="education" name="education">
+                        <option value="">Select education level...</option>
+                        <option value="Less than high school">Less than high school</option>
+                        <option value="High school diploma" selected>High school diploma</option>
+                        <option value="Some college">Some college</option>
+                        <option value="Associate degree">Associate degree</option>
+                        <option value="Bachelor's degree">Bachelor's degree</option>
+                        <option value="Graduate degree">Graduate degree</option>
+                    </select>
+                </div>
+                
+                <div class="form-field">
+                    <label for="pastOccupation">Past Occupation</label>
+                    <input type="text" id="pastOccupation" name="pastOccupation" value="Hospital custodian (30+ years)">
+                </div>
+                
+                <div class="form-field">
+                    <label for="incomeLevel">Income Level</label>
+                    <select id="incomeLevel" name="incomeLevel">
+                        <option value="">Select income level...</option>
+                        <option value="Below federal poverty line" selected>Below federal poverty line</option>
+                        <option value="Low income">Low income</option>
+                        <option value="Moderate income">Moderate income</option>
+                        <option value="Middle income">Middle income</option>
+                        <option value="High income">High income</option>
+                    </select>
+                </div>
+                
+                <div class="form-field">
+                    <label>Income Sources</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="socialSecurity" name="incomeSource" value="socialSecurity" checked>
+                            <label for="socialSecurity">Social Security</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="pension" name="incomeSource" value="pension">
+                            <label for="pension">Pension</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="savings" name="incomeSource" value="savings">
+                            <label for="savings">Retirement savings</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="disability" name="incomeSource" value="disability">
+                            <label for="disability">Disability benefits</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label for="digitalLiteracy">Digital Literacy Level</label>
+                    <div class="slider-container">
+                        <input type="range" id="digitalLiteracy" name="digitalLiteracy" min="1" max="5" value="2" class="slider">
+                        <div class="slider-labels">
+                            <span>Very Low</span>
+                            <span>Low</span>
+                            <span>Moderate</span>
+                            <span>High</span>
+                            <span>Very High</span>
+                        </div>
+                        <div class="slider-value" id="digitalLiteracyValue">Low</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Support System -->
+            <div class="card">
+                <div class="card-title">
+                    <span class="material-icons">people</span>
+                    Support System
+                </div>
+                
+                <div class="form-field">
+                    <label for="supportSystem">Primary Support System</label>
+                    <textarea id="supportSystem" name="supportSystem" rows="3">One adult daughter (care partner), a part-time home health aide, church community</textarea>
+                </div>
+                
+                <div class="form-field">
+                    <label for="transportation">Transportation Options</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="publicBus" name="transportation" value="publicBus" checked>
+                            <label for="publicBus">Public bus</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="paratransit" name="transportation" value="paratransit" checked>
+                            <label for="paratransit">Paratransit</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="family" name="transportation" value="family">
+                            <label for="family">Family/friends</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="ownVehicle" name="transportation" value="ownVehicle">
+                            <label for="ownVehicle">Own vehicle</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="rideshare" name="transportation" value="rideshare">
+                            <label for="rideshare">Rideshare/Taxi</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label for="socialIsolation">Social Isolation Level</label>
+                    <div class="slider-container">
+                        <input type="range" id="socialIsolation" name="socialIsolation" min="1" max="5" value="4" class="slider">
+                        <div class="slider-labels">
+                            <span>Very Connected</span>
+                            <span>Connected</span>
+                            <span>Moderate</span>
+                            <span>Isolated</span>
+                            <span>Very Isolated</span>
+                        </div>
+                        <div class="slider-value" id="socialIsolationValue">Isolated</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cultural & Life Course -->
+            <div class="card">
+                <div class="card-title">
+                    <span class="material-icons">history_edu</span>
+                    Cultural & Life Course
+                </div>
+                
+                <div class="form-field">
+                    <label for="culturalConsiderations">Cultural Considerations</label>
+                    <textarea id="culturalConsiderations" name="culturalConsiderations" rows="3">Deep trust in her faith and spiritual community; prior negative experiences with institutional care</textarea>
+                </div>
+                
+                <div class="form-field">
+                    <label for="lifeCoursehighlights">Life Course Highlights</label>
+                    <textarea id="lifeCourseHighlights" name="lifeCourseHighlights" rows="4">• Grew up during the Civil Rights era in rural Alabama
+• Worked physically demanding jobs with limited retirement planning
+• Served as caregiver for her husband with Parkinson's disease for 7 years
+• Moved to current city 5 years ago to be closer to her daughter after husband's death so isn't as familiar with community and supports; no longer in contact with longtime friends</textarea>
+                </div>
+
+                <div class="form-field">
+                    <label for="emotionalWellbeing">Emotional Wellbeing</label>
+                    <textarea id="emotionalWellbeing" name="emotionalWellbeing" rows="2">Strong faith, resilient, but often lonely and anxious in unfamiliar settings</textarea>
+                </div>
+
+                <div class="form-field">
+                    <label for="trustLevel">Trust in Healthcare/Institutions</label>
+                    <div class="slider-container">
+                        <input type="range" id="trustLevel" name="trustLevel" min="1" max="5" value="2" class="slider">
+                        <div class="slider-labels">
+                            <span>Very Low</span>
+                            <span>Low</span>
+                            <span>Moderate</span>
+                            <span>High</span>
+                            <span>Very High</span>
+                        </div>
+                        <div class="slider-value" id="trustLevelValue">Low</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SDOH Factors -->
+            <div class="card full-width">
+                <div class="card-title">
+                    <span class="material-icons">location_city</span>
+                    Social Determinants of Health (SDOH)
+                </div>
+                
+                <div class="form-grid" style="margin-top: 16px;">
+                    <div class="form-field">
+                        <label for="healthcareAccess">Healthcare Access</label>
+                        <textarea id="healthcareAccess" name="healthcareAccess" rows="2">Delayed diagnoses due to poor access and mistrust</textarea>
+                    </div>
+                    
+                    <div class="form-field">
+                        <label for="housingQuality">Housing Quality</label>
+                        <textarea id="housingQuality" name="housingQuality" rows="2">Safe but aging infrastructure; elevator often breaks</textarea>
+                    </div>
+                    
+                    <div class="form-field">
+                        <label for="socialSupport">Social Support</label>
+                        <textarea id="socialSupport" name="socialSupport" rows="2">Faith community is strong, but geographic family is limited</textarea>
+                    </div>
+                    
+                    <div class="form-field">
+                        <label for="economicStability">Economic Stability</label>
+                        <textarea id="economicStability" name="economicStability" rows="2">Struggles to afford out-of-pocket care and medications</textarea>
+                    </div>
+                    
+                    <div class="form-field">
+                        <label for="neighborhood">Neighborhood/Environment</label>
+                        <textarea id="neighborhood" name="neighborhood" rows="2">Urban, limited walkability, safety concerns after dark</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Journey Considerations -->
+            <div class="card full-width">
+                <div class="card-title">
+                    <span class="material-icons">timeline</span>
+                    Journey Considerations
+                </div>
+                
+                <div class="form-field">
+                    <label>Key Touchpoints/Challenges</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="diagnosis" name="touchpoints" value="diagnosis" checked>
+                            <label for="diagnosis">Initial diagnosis process</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="carePlanning" name="touchpoints" value="carePlanning" checked>
+                            <label for="carePlanning">Care planning</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="medicationMgmt" name="touchpoints" value="medicationMgmt" checked>
+                            <label for="medicationMgmt">Medication management</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="homeSafety" name="touchpoints" value="homeSafety" checked>
+                            <label for="homeSafety">Home safety</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="serviceNav" name="touchpoints" value="serviceNav" checked>
+                            <label for="serviceNav">Service navigation</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="socialEng" name="touchpoints" value="socialEng" checked>
+                            <label for="socialEng">Social engagement</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="crisisER" name="touchpoints" value="crisisER" checked>
+                            <label for="crisisER">Crisis/ER visits</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label for="designPriorities">Design Priorities for This Persona</label>
+                    <textarea id="designPriorities" name="designPriorities" rows="3">Focus on culturally competent screening, simplified access pathways, community-based support systems, and proactive outreach strategies</textarea>
+                </div>
+            </div>
+        </form>
+
+        <div class="actions">
+            <button type="button" class="btn btn-secondary" onclick="resetForm()">
+                <span class="material-icons">refresh</span>
+                Reset Form
+            </button>
+            <button type="button" class="btn btn-primary" onclick="savePersona()">
+                <span class="material-icons">save</span>
+                Save Persona
+            </button>
+            <button type="button" class="btn btn-primary" onclick="exportPersona()">
+                <span class="material-icons">download</span>
+                Export JSON
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Update slider values
+        const sliders = ['digitalLiteracy', 'socialIsolation', 'trustLevel'];
+        const sliderLabels = {
+            digitalLiteracy: ['Very Low', 'Low', 'Moderate', 'High', 'Very High'],
+            socialIsolation: ['Very Connected', 'Connected', 'Moderate', 'Isolated', 'Very Isolated'],
+            trustLevel: ['Very Low', 'Low', 'Moderate', 'High', 'Very High']
+        };
+
+        sliders.forEach(sliderId => {
+            const slider = document.getElementById(sliderId);
+            const valueDisplay = document.getElementById(sliderId + 'Value');
+            
+            slider.addEventListener('input', () => {
+                const value = parseInt(slider.value);
+                valueDisplay.textContent = sliderLabels[sliderId][value - 1];
+            });
+        });
+
+        function collectFormData() {
+            const form = document.getElementById('personaForm');
+            const formData = new FormData(form);
+            const persona = {};
+
+            // Basic fields
+            for (let [key, value] of formData.entries()) {
+                if (persona[key]) {
+                    if (Array.isArray(persona[key])) {
+                        persona[key].push(value);
+                    } else {
+                        persona[key] = [persona[key], value];
+                    }
+                } else {
+                    persona[key] = value;
+                }
+            }
+
+            // Handle checkboxes that might not be checked
+            const checkboxGroups = ['mobility', 'cognitive', 'incomeSource', 'transportation', 'touchpoints'];
+            checkboxGroups.forEach(group => {
+                const checkboxes = document.querySelectorAll(`input[name="${group}"]`);
+                const values = [];
+                checkboxes.forEach(cb => {
+                    if (cb.checked) values.push(cb.value);
+                });
+                persona[group] = values;
+            });
+
+            // Add slider labels
+            sliders.forEach(sliderId => {
+                const slider = document.getElementById(sliderId);
+                const value = parseInt(slider.value);
+                persona[sliderId + '_label'] = sliderLabels[sliderId][value - 1];
+            });
+
+            return persona;
+        }
+
+        function savePersona() {
+            const persona = collectFormData();
+            const personaJson = JSON.stringify(persona, null, 2);
+            
+            // Save to browser storage
+            const personaName = persona.name || 'Unnamed Persona';
+            const savedPersonas = JSON.parse(localStorage.getItem('savedPersonas') || '{}');
+            savedPersonas[personaName] = persona;
+            localStorage.setItem('savedPersonas', JSON.stringify(savedPersonas));
+            
+            alert(`Persona "${personaName}" saved successfully!`);
+        }
+
+        function exportPersona() {
+            const persona = collectFormData();
+            const personaJson = JSON.stringify(persona, null, 2);
+            
+            const blob = new Blob([personaJson], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${persona.name || 'persona'}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function resetForm() {
+            if (confirm('Are you sure you want to reset the form? All current data will be lost.')) {
+                document.getElementById('personaForm').reset();
+                
+                // Reset sliders to default values
+                document.getElementById('digitalLiteracy').value = 2;
+                document.getElementById('socialIsolation').value = 4;
+                document.getElementById('trustLevel').value = 2;
+                
+                // Update slider displays
+                sliders.forEach(sliderId => {
+                    const slider = document.getElementById(sliderId);
+                    const valueDisplay = document.getElementById(sliderId + 'Value');
+                    const value = parseInt(slider.value);
+                    valueDisplay.textContent = sliderLabels[sliderId][value - 1];
+                });
+            }
+        }
+
+        // Initialize slider displays on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            sliders.forEach(sliderId => {
+                const slider = document.getElementById(sliderId);
+                const valueDisplay = document.getElementById(sliderId + 'Value');
+                const value = parseInt(slider.value);
+                valueDisplay.textContent = sliderLabels[sliderId][value - 1];
+            });
+        });
+    </script>
+</body>
+</html>
